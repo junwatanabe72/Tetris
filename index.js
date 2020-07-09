@@ -13,8 +13,8 @@ window.onload = function () {
     html.push("<tr>");
     for (let x = 0; x < width; x++) {
       if (x === 0 || x === width - 1 || y === height - 1) {
-        html.push('<td style="background-color:silver;"></td>');
-        fills[x + y * width] = "silver";
+        html.push('<td id="side"style="background-color:black;"></td>');
+        fills[x + y * width] = "black";
       } else {
         html.push("<td></td>");
       }
@@ -170,75 +170,87 @@ window.onload = function () {
     //ブロックが回転した場合の、ブロックの一マスごとの位置情報をpartsに代入。
     let parts = block.angles[angle % block.angles.length];
 
-    //ここから現在のブロックが
+
+//ここからブロックを格納して、揃っているか判定し、次のブロックを生成する処理。揃っていなければ、スルー
+//ブロックにぶつかっていない。①へ行く。処理なし。
+//ブロックにぶつかっているが、自然落下でない。②へ行く。ぶつかっているので、移動できない。一つ前の状況に戻す。
+//ブロックにぶつかっており、自然落下のタイミング。③へ行く。横列が揃っているか判定する。
+//揃っているかにかかわらず、最後は、④へ行く。次のブロックと初期値を設定する。
     for (let i = -1; i < parts.length; i++) {
       let offsetA = parts[i] || 0;
       //ぶつかり判定。fills[x]が既に登録されている場合、true。
       if (!fills[top * width + left + offsetA]) {
-        //falseの場合は、特に何もなし。
+        //①①①①①
       } else {
         //ぶつかり判定trueで、tickが２０の倍数（つまり、自然落下）の場合、true。
         if (tick % speed !== 0) {
-          //falseの場合、一つ前の状況に戻す。(ぶつかっているので、移動できない。)
+          //②②②②②②
           left = left0
           top = top0
           angle = angle0
           parts = parts0
         } else {
-          //trueの場合、fillsにブロック位置情報を追加。
-
+          //③③③③③③
           //fillsに現在のブロックを追加して、次のmoveのためのブロック等を生成する。
           for (let j = -1; j < parts0.length; j++) {
             let offsetB = parts0[j] || 0
             fills[top0 * width + left0 + offsetB] = block.color
           }
-
-          // ゲーム〜オーバーmove関数を終わらせる。
+    
+    // ゲーム〜オーバーmove関数を終わらせる。
           if (score0 === score) {
             for (let i in fills) {
               if (fills[i]) { cells[i].style.backgroundColor = "black" }
             }
+            document.getElementById("info").innerHTML = "Game Over"
+            const title = document.getElementById("title")
+            title.innerHTML = "もう一度遊ぶ";
+            title.setAttribute("style","cursor: pointer;")
+            title.addEventListener("click",initalize);
             return
           }
-          //ブロックの段が消されたら加算される変数
+          
+    //横列が揃っているか確認する。
           let cleans = 0
-          //ブロックの下段から横列が揃っているか確認する
+          //ブロックの下段から横列が揃っているか判定 縦列のfor 縦列毎に段を消す判定をする。
           for (let y = height - 2; y >= 0; y--) {
             //trueのままであれば,列が揃っている状態。
             let filled = true
-            //横列に空があれば、filledをfalseにする。
+            //横列に空があれば、filledをfalseにする。揃っていれば、スルー 横列のfor
             for (let x = 1; x < width - 1; x++) {
               if (!fills[y * width + x]) {
                 filled = false
                 break;
               }
             }
-            //横列が揃っていれば、揃っている列に上段の列を代入して、上書き。
+            //横列が揃っていれば、揃っている列に上段の列を代入して、上書き。揃ってなければ、スルー
             if (filled) {
               for (let y2 = y; y2 >= 0; y2--) {
                 for (let x = 1; x < width - 1; x++) {
+                  //fillsに横列が消された後の場のブロックの状況を記録する。
                   fills[y2 * width + x] = fills[(y2 - 1) * width + x]
                 }
               }
-              //列が揃って段が下がった場合、下がってきた段が揃っているか確認。
+              //列が揃って段が下がった場合、下がってきた段が揃っているか確認。一番上のfor分のyを加算。
               y++
               cleans++
             }
           }
-
+          //cleans
           if (cleans > 0) {
             //cleansの数だけボーナス加算。
             score += Math.pow(10, cleans) * 10
-            
+
             for (let y = height - 2; y >= 0; y--) {
               for (let x = 1; x < width - 1; x++) {
                 let color = fills[y * width + x] || ""
+                //場にブロックの配置を描画する（色を塗る。）
                 cells[y * width + x].style.backgroundColor = color
               }
             }
           }
-          //自然落下でブロックがfillsに格納されたので、次のmove関数が実行される。
-          //次のmove関数に渡す各種変数の初期値を定義。
+    //横列が揃っているか判定する。ここまで
+          //④④④④④④      
           block = blocks[Math.floor(Math.random() * blocks.length)]
           left0 = left = Math.floor(width / 2)
           top0 = top = 2
@@ -249,6 +261,7 @@ window.onload = function () {
         break;
       }
     }
+//ここからブロックが揃っているかを判定する。ここまで.
 
 
     if (top != top0) { score++ }
@@ -259,21 +272,24 @@ window.onload = function () {
       cells[top0 * width + left0 + offset].style.backgroundColor = "";
     }
 
-    // //parts0に回転指示カウントを反映させたanglesを代入
-    // //%は除算の余りを出力するもの。1(1),2(2),3(3),4(0),5(1)....
     parts0 = parts
 
-    // //ブロック回転指示後の表示
+    // //今ターンのブロック表示を描画
     for (let i = -1; i < parts0.length; i++) {
       let offset = parts0[i] || 0;
       cells[top * width + left + offset].style.backgroundColor = block.color;
     }
 
-    const info = `${tick}(${left},${top}) score:${score}`
+    // const info = `${tick}(${left},${top}) score:${score}`
+    const info = `score:${score}`
     document.getElementById("info").innerHTML = info
     //第二引数のタイミング毎にmove関数を再起的に実行。
     setTimeout(move, 1000 / speed);
   };
-
   move();
 };
+
+
+function initalize() {
+  location.reload()
+}
