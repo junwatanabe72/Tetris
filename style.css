@@ -1,0 +1,24 @@
+.l-container{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.title{
+  font-size: 2rem;
+  margin: 10px 0px;
+  text-align: center;
+}
+table {
+        border-collapse: collapse;
+      }
+table td {
+        width: 20px;
+        height: 20px;
+        border: 1px solid black;
+      }
+
+#side {
+  display: none;
+}
