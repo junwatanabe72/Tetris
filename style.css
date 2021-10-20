@@ -1,24 +1,28 @@
-.l-container{
+.l-container {
   height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-.title{
+.title {
   font-size: 2rem;
   margin: 10px 0px;
   text-align: center;
 }
 table {
-        border-collapse: collapse;
-      }
+  border-collapse: collapse;
+}
 table td {
-        width: 20px;
-        height: 20px;
-        border: 1px solid black;
-      }
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+}
 
 #side {
   display: none;
+}
+.bi:active {
+  background-color: #6648b1;
+  border: 1px solid #563d7c;
 }
