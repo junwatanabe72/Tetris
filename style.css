@@ -68,6 +68,9 @@ table td {
 }
 
 @media screen and (max-width: 650px) {
+  .l-container {
+    height: 90vh;
+  }
   table td {
     width: 5.5vw;
     height: 2.5vh;
