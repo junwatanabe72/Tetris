@@ -247,7 +247,7 @@ const analyzeField = (cells, fills, gameStatus) => {
         let offsetB = parts0[j] || 0;
         fills[top0 * width + left0 + offsetB] = block.color;
       }
-      // gameOverの場合の処理
+      // gameOverの処理
       if (score0 === score) {
         const blackCells = gameOver(cells, fills);
         cells = [...blackCells];

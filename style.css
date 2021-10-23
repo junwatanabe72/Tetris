@@ -37,7 +37,6 @@ ul {
 }
 .title {
   font-size: 2rem;
-  margin: 10px 0px;
   text-align: center;
 }
 table {
@@ -52,7 +51,7 @@ table td {
 }
 
 #info {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 #side {
   display: none;
@@ -72,8 +71,8 @@ table td {
     height: 90vh;
   }
   table td {
-    width: 5.5vw;
-    height: 2.5vh;
+    width: 5.4vw;
+    height: 2.4vh;
   }
   .bi {
     font-size: 2.5rem;
