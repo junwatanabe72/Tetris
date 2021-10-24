@@ -36,7 +36,7 @@ ul {
   justify-content: center;
 }
 .title {
-  font-size: 2rem;
+  font-size: 1.8rem;
   text-align: center;
 }
 table {
@@ -72,11 +72,11 @@ table td {
   }
   table td {
     width: 5.4vw;
-    height: 2.4vh;
+    height: 2.3vh;
   }
   .bi {
-    font-size: 2.5rem;
-    padding-right: 10px;
+    font-size: 1.5rem;
+    padding-right: 20px;
     padding-bottom: 10px;
   }
 }

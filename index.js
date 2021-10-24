@@ -276,6 +276,15 @@ const analyzeField = (cells, fills, gameStatus) => {
   return [cells, fills, gameStatus];
 };
 
+const addTickCount = (gameStatus) => {
+  const { score } = gameStatus;
+  const result = score / 1000 > 1 ? Math.ceil(score / 1000) : 1;
+  if (result > 10) {
+    return 10;
+  }
+  return result;
+};
+
 const keyElements = ["down", "left", "right", "rotate"].map((element) => {
   return document.getElementById(element);
 });
@@ -294,10 +303,11 @@ const move = () => {
   if (isOver) {
     return;
   }
+  const addCount = addTickCount(gameStatus);
   // move関数実行前の初期値を登録
   gameStatus = {
     ...gameStatus,
-    tick: gameStatus.tick + 1,
+    tick: gameStatus.tick + addCount,
     left0: gameStatus.left,
     top0: gameStatus.top,
     angle0: gameStatus.angle,
