@@ -224,7 +224,7 @@ const describeBlock = (cells, isClear, gameStatus) => {
 
 const analyzeField = (cells, fills, gameStatus) => {
   for (let i = -1; i < gameStatus.parts.length; i++) {
-    const { parts, tick } = gameStatus;
+    const { parts, tick, block } = gameStatus;
     const offsetA = parts[i] || 0;
     const isCollied =
       !!fills[gameStatus.top * width + gameStatus.left + offsetA];
