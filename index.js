@@ -349,3 +349,4 @@ window.addEventListener("load", () => {
   createField();
   move();
 });
+console.log(document.body.clientHeight);
