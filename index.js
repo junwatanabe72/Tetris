@@ -349,4 +349,11 @@ window.addEventListener("load", () => {
   createField();
   move();
 });
-console.log(document.body.clientHeight);
+// console.log(document.body.clientHeight);
+
+window.addEventListener("resize", () => {
+  // あとは上記と同じスクリプトを実行
+  let vh = window.innerHeight * 0.01;
+  console.log(vh);
+  document.documentElement.style.setProperty("--vh", `${vh}px`);
+});

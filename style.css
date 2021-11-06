@@ -46,8 +46,8 @@ table {
 table td {
   width: 3.5vw;
   max-width: 30px;
-  /* height: 3.1vh; */
-  /* max-height: 30px; */
+  height: 3.1vh;
+  max-height: 30px;
   border: 1px solid black;
 }
 
@@ -73,7 +73,7 @@ table td {
   }
   table td {
     width: 4.5vw;
-    /* height: 2vh; */
+    height: 2vh;
   }
   .bi {
     font-size: 1.2rem;
